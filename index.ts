@@ -1,15 +1,6 @@
-import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
+import app from './src/server';
+import './src/config/db.config';
 
-const server = express();
-
-server.use(cors());
-server.use(morgan('dev'));
-server.use(express.json());
-
-server.listen(3000, () => {
-  /* eslint-disable no-console */
+app.listen(3000, () => {
   console.log('Server is listening on port 3000');
-  /* eslint-enable no-console */
 });
