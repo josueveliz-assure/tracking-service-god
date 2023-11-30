@@ -20,6 +20,13 @@ jest.mock('../../src/repositories/module.repository', () => ({
 }));
 
 describe('createModuleController', () => {
+  const trainees = {
+    name: 'Juan',
+    lastName: 'Mamani',
+    email: 'juan.mamani@example.com',
+    grade: 90,
+  };
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -33,6 +40,7 @@ describe('createModuleController', () => {
       endDate: String(new Date()),
       schedule: '10:30 - 12:00',
     };
+
     (createModuleRepository as jest.Mock).mockResolvedValueOnce(
       mockCreatedModule,
     );
@@ -57,27 +65,36 @@ describe('createModuleController', () => {
   });
 
   it('should respond with status 201 and return updated module', async () => {
-    const trainees = {
-      name: 'Juan',
-      lastName: 'Mamani',
-      email: 'juan.mamani@example.com',
-      grade: 90,
-    };
-    const mockCreatedModule = {
+    const mockUpdatedModule = { 
       name: 'Test Module',
       description: 'Testing module',
       trainerId: 1,
+      trainees: [trainees],
       startDate: String(new Date()),
       endDate: String(new Date()),
       schedule: '10:30 - 12:00',
     };
+    
     (addTraineesModuleRepository as jest.Mock).mockResolvedValueOnce(
-      mockCreatedModule,
+      mockUpdatedModule,
     );
 
-    const response = await request(app).put('/1').send();
+    const response = await request(app).put('/1').send([trainees]);
 
     expect(response.status).toBe(201);
-    expect(response.body).toEqual(trainees);
+    expect(response.body).toEqual(mockUpdatedModule);
+  });
+
+  it('should respond with status 500 and error message on updated repository error', async () => {
+    const mockError = new Error('Repository error');
+    (addTraineesModuleRepository as jest.Mock).mockRejectedValueOnce(mockError);
+
+    const response = await request(app).put('/2').send([trainees]);
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({
+      message: mockError.message,
+      trace: mockError.stack,
+    });
   });
 });
