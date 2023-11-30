@@ -9,6 +9,7 @@ export interface Trainee {
 }
 
 export interface Module extends Document {
+  id? : number,
   name: string,
   description: string,
   trainerId: number,
