@@ -9,6 +9,13 @@ describe('createModuleRepository', () => {
     jest.clearAllMocks();
   });
 
+  it('should not create a new module with incomplete data', async () => {
+    const incompleteModuleData: Partial<Module> = {};
+    const result = await createModuleRepository(incompleteModuleData as Module);
+
+    expect(result).toBeUndefined();
+  });
+
   it('should create a new module', async () => {
     const mockCreatedModule: Partial<Module> = {
       name: 'Test Module',
