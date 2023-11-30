@@ -22,7 +22,6 @@ export const addTraineesModuleController = async (req: Request, res: Response) =
     const update: Partial<Module> = { trainees: [...body] };
 
     const moduleUpdated = await addTraineesModuleRepository(req.params.id, update as Module);
-
     return res.status(201).json(moduleUpdated);
   } catch (error) {
     if (error instanceof Error) {
