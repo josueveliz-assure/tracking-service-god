@@ -6,5 +6,5 @@ export const createModuleRepository = async (module: Module): Promise<Module> =>
 };
 
 export const addTraineesModuleRepository = async (id: string, trainees: Module): Promise<Module|null> => {
-  return ModuleModel.findByIdAndUpdate(id, trainees);
+  return ModuleModel.findByIdAndUpdate(id, trainees, { new: true });
 };
