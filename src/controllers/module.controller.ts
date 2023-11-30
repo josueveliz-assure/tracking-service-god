@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createModuleRepository } from '../repositories/module.repository';
+import { createModuleRepository, addTraineesModuleRepository } from '../repositories/module.repository';
 import { Module } from '../types/types';
 
 export const createModuleController = async (req: Request, res: Response) => {
@@ -8,6 +8,22 @@ export const createModuleController = async (req: Request, res: Response) => {
     const newModule = await createModuleRepository(body as Module);
 
     return res.status(201).json(newModule);
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(500).json({ message: error.message, trace: error.stack });
+    }
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const addTraineesModuleController = async (req: Request, res: Response) => {
+  try {
+    const { body } = req;
+    const update: Partial<Module> = { trainees: [...body] };
+
+    const moduleUpdated = await addTraineesModuleRepository(req.params.id, update as Module);
+
+    return res.status(201).json(moduleUpdated);
   } catch (error) {
     if (error instanceof Error) {
       return res.status(500).json({ message: error.message, trace: error.stack });
