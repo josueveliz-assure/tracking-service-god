@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { Module, Trainee } from '../types/types';
 
 const traineeSchema = new mongoose.Schema<Trainee>({
-  id: { type: String, required: true },
   name: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true },

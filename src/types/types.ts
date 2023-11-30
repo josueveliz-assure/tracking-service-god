@@ -1,7 +1,6 @@
 import { Document } from 'mongoose';
 
 export interface Trainee {
-  id: string,
   name: string,
   lastName: string,
   email: string,
