@@ -9,7 +9,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     'index.ts',
     '<rootDir>/src/server.ts',
-    '<rootDir>/src/routes/*',
+    '<rootDir>/src/config/*',
   ],
   coverageThreshold: {
     global: {
