@@ -1,6 +1,7 @@
 import {
   createModuleRepository, 
-  addTraineesModuleRepository 
+  addTraineesModuleRepository,
+  findModuleByIdRepository 
 } from '../../src/repositories/module.repository';
 import { Module } from '../../src/types/types';
 import ModuleModel from '../../src/models/module';
@@ -72,5 +73,23 @@ describe('createModuleRepository', () => {
     await addTraineesModuleRepository('1', mockTrainees as Module);
 
     expect(ModuleModel.findByIdAndUpdate).toHaveBeenCalledWith('1', mockTrainees, { new: true });
+  });
+
+  it('should find a module', async () => {
+    const mockModule: Partial<Module> = {
+      name: 'Test Module',
+      description: 'Testing module',
+      trainerId: 1,
+      trainees: [],
+      startDate: new Date(),
+      endDate: new Date(),
+      schedule: '10:30 - 12:00',
+    };
+
+    (ModuleModel.findById as jest.Mock).mockResolvedValueOnce(mockModule);
+
+    await findModuleByIdRepository('1');
+
+    expect(ModuleModel.findById).toHaveBeenCalledWith('1');
   });
 });

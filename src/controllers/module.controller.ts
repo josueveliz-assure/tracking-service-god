@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import {
   createModuleRepository,
   addTraineesModuleRepository,
-  addFeedbackToTraineeRepository}
-  from '../repositories/module.repository';
-
+  addFeedbackToTraineeRepository,
+  findModuleByIdRepository
+} from '../repositories/module.repository';
 import { Module } from '../types/types';
 
 export const createModuleController = async (req: Request, res: Response) => {
@@ -24,9 +24,12 @@ export const createModuleController = async (req: Request, res: Response) => {
 export const addTraineesModuleController = async (req: Request, res: Response) => {
   try {
     const { body } = req;
-    const update: Partial<Module> = { trainees: [...body] };
 
+    const moduleFromDb = await findModuleByIdRepository(req.params.id);
+    
+    const update: Partial<Module> = { trainees: [...moduleFromDb?.trainees || [], ...body] };
     const moduleUpdated = await addTraineesModuleRepository(req.params.id, update as Module);
+    
     return res.status(201).json(moduleUpdated);
   } catch (error) {
     if (error instanceof Error) {

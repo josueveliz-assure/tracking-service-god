@@ -7,6 +7,7 @@ import {
 import {
   createModuleRepository,
   addTraineesModuleRepository,
+  findModuleByIdRepository
 } from '../../src/repositories/module.repository';
 
 const app = express();
@@ -17,6 +18,7 @@ app.put('/:id', addTraineesModuleController);
 jest.mock('../../src/repositories/module.repository', () => ({
   createModuleRepository: jest.fn(),
   addTraineesModuleRepository: jest.fn(),
+  findModuleByIdRepository: jest.fn()
 }));
 
 describe('createModuleController', () => {
@@ -78,6 +80,9 @@ describe('createModuleController', () => {
     (addTraineesModuleRepository as jest.Mock).mockResolvedValueOnce(
       mockUpdatedModule,
     );
+    (findModuleByIdRepository as jest.Mock).mockResolvedValueOnce(
+      mockUpdatedModule,
+    );
 
     const response = await request(app).put('/1').send([trainees]);
 
@@ -88,6 +93,7 @@ describe('createModuleController', () => {
   it('should respond with status 500 and error message on updated repository error', async () => {
     const mockError = new Error('Repository error');
     (addTraineesModuleRepository as jest.Mock).mockRejectedValueOnce(mockError);
+    (findModuleByIdRepository as jest.Mock).mockRejectedValueOnce(mockError);
 
     const response = await request(app).put('/2').send([trainees]);
 
