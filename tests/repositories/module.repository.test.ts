@@ -76,7 +76,7 @@ describe('createModuleRepository', () => {
   });
 
   it('should find a module', async () => {
-    const mockUpdatedModule: Partial<Module> = {
+    const mockModule: Partial<Module> = {
       name: 'Test Module',
       description: 'Testing module',
       trainerId: 1,
@@ -86,7 +86,7 @@ describe('createModuleRepository', () => {
       schedule: '10:30 - 12:00',
     };
 
-    (ModuleModel.findById as jest.Mock).mockResolvedValueOnce(mockUpdatedModule);
+    (ModuleModel.findById as jest.Mock).mockResolvedValueOnce(mockModule);
 
     await findModuleByIdRepository('1');
 
