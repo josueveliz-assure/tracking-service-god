@@ -2,8 +2,12 @@ import { Request, Response } from 'express';
 import {
   createModuleRepository,
   addTraineesModuleRepository,
+<<<<<<< HEAD
   addFeedbackToTraineeRepository,
   findModuleByIdRepository
+=======
+  addFeedbackToTraineeRepository
+>>>>>>> b3652c0d12b35c6c31b606d79de83a7e5109c7cc
 } from '../repositories/module.repository';
 import { Module } from '../types/types';
 
