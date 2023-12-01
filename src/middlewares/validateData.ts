@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { moduleSchema,  } from '../types/schemas';
+import { moduleSchema, traineeSchema, feedbackSchema } from '../types/schemas';
 import z from 'zod';
 
 export const validateData = async<T> (schema: z.ZodSchema<T>, req: Request, res: Response): Promise<T | Response> => {
@@ -25,7 +25,14 @@ export const validateModuleData = async (req: Request, res: Response, next: Next
 };
 
 export const validateTraineeData = async (req: Request, res: Response, next: NextFunction) => {
-  await validateData(moduleSchema, req, res);
+  await validateData(traineeSchema, req, res);
+  if (!res.writableEnded) {
+    next();
+  }
+};
+
+export const validateFeedbackData = async (req: Request, res: Response, next: NextFunction) => {
+  await validateData(feedbackSchema, req, res);
   if (!res.writableEnded) {
     next();
   }
