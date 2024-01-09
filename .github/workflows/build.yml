@@ -32,7 +32,7 @@ jobs:
         with:
           name: built-artifact
           path: dist
-          jobs:
+
   lint:
     runs-on: ubuntu-latest
 
