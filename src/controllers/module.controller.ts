@@ -1,12 +1,14 @@
 import { Request, Response } from 'express';
+
 import {
   createModuleRepository,
   addTraineesModuleRepository,
   addFeedbackToTraineeRepository,
+  findModuleByIdRepository,
   setGradeToTraineeRepository
 } from '../repositories/module.repository';
-
 import { Module } from '../types/types';
+import { simpleErrorHandler } from '../handlers/error.handler';
 
 export const createModuleController = async (req: Request, res: Response) => {
   try {
@@ -15,25 +17,24 @@ export const createModuleController = async (req: Request, res: Response) => {
 
     return res.status(201).json(newModule);
   } catch (error) {
-    if (error instanceof Error) {
-      return res.status(500).json({ message: error.message, trace: error.stack });
-    }
-    return res.status(500).json({ message: 'Internal server error' });
+    const errorResponse = simpleErrorHandler(error);
+    res.status(errorResponse.statusCode).json(errorResponse.json);
   }
 };
 
 export const addTraineesModuleController = async (req: Request, res: Response) => {
   try {
     const { body } = req;
-    const update: Partial<Module> = { trainees: [...body] };
 
+    const moduleFromDb = await findModuleByIdRepository(req.params.id);
+
+    const update: Partial<Module> = { trainees: [...moduleFromDb?.trainees || [], ...body] };
     const moduleUpdated = await addTraineesModuleRepository(req.params.id, update as Module);
+
     return res.status(201).json(moduleUpdated);
   } catch (error) {
-    if (error instanceof Error) {
-      return res.status(500).json({ message: error.message, trace: error.stack });
-    }
-    return res.status(500).json({ message: 'Internal server error' });
+    const errorResponse = simpleErrorHandler(error);
+    res.status(errorResponse.statusCode).json(errorResponse.json);
   }
 };
 
@@ -46,10 +47,8 @@ export const addFeedbackToTraineeController = async (req: Request, res: Response
 
     return res.status(201).json(moduleUpdated);
   } catch (error) {
-    if (error instanceof Error) {
-      return res.status(500).json({ message: error.message, trace: error.stack });
-    }
-    return res.status(500).json({ message: 'Internal server error' });
+    const errorResponse = simpleErrorHandler(error);
+    res.status(errorResponse.statusCode).json(errorResponse.json);
   }
 };
 
@@ -62,9 +61,7 @@ export const setGradeToTraineeController = async (req: Request, res: Response) =
 
     return res.status(201).json(moduleUpdated);
   } catch (error) {
-    if (error instanceof Error) {
-      return res.status(500).json({ message: error.message, trace: error.stack });
-    }
-    return res.status(500).json({ message: 'Internal server error' });
+    const errorResponse = simpleErrorHandler(error);
+    res.status(errorResponse.statusCode).json(errorResponse.json);
   }
 };
