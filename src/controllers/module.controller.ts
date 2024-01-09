@@ -4,8 +4,8 @@ import {
   createModuleRepository,
   addTraineesModuleRepository,
   addFeedbackToTraineeRepository,
-  setGradeToTraineeRepository,
-  findModuleByIdRepository
+  findModuleByIdRepository,
+  setGradeToTraineeRepository
 } from '../repositories/module.repository';
 import { Module } from '../types/types';
 import { simpleErrorHandler } from '../handlers/error.handler';
