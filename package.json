@@ -4,10 +4,12 @@
   "description": "Modules, feedback, grades, etc.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest",
+    "testDev": "jest --watchAll",
     "start": "node dist/index.js",
     "build": "npx tsc",
-    "dev": "ts-node-dev index.ts"
+    "dev": "ts-node-dev index.ts",
+    "lint": "eslint . --ext ts --report-unused-disable-directives "
   },
   "author": "AD-trainees",
   "license": "ISC",

@@ -16,8 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Add your build steps here
-      # For example, if you're using Node.js:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -29,10 +27,44 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Add additional steps as needed
-
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: built-artifact
           path: dist
+          jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Eslint
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Eslint
+        run: npm test
