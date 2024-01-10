@@ -115,9 +115,5 @@ jobs:
         kubectl apply -f tracking-service.yaml
         kubectl apply -f tracking-service-dev.yaml
         kubectl apply -f tracking-service-configmap.yaml
-
-    - name: Deploy mongo to EKS
-      run: |
-        sed -i.bak "s|DOCKER_IMAGE|mongo:latest|g" mongo-service.yaml && \
         kubectl apply -f mongodb-service.yaml
         kubectl apply -f mongodb-dev.yaml
