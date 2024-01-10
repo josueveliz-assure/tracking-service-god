@@ -109,11 +109,14 @@ jobs:
     - name: Update kube config
       run: aws eks update-kubeconfig --name Kubernetes-ad --region us-east-1
 
-    - name: Deploy to EKS
+    - name: Deploy app to EKS
       run: |
         sed -i.bak "s|DOCKER_IMAGE|${{ secrets.DOCKER_USERNAME }}/tracking-service:latest|g" tracking-service.yaml && \
         kubectl apply -f tracking-service.yaml
         kubectl apply -f tracking-service-dev.yaml
         kubectl apply -f tracking-service-configmap.yaml
-        kubectl apply -f mongodb-dev.yaml
+
+    - name: Deploy mongo to EKS
+      run: |
+        sed -i.bak "s|DOCKER_IMAGE|mongodb:latest|g" mongo-service.yaml && \
         kubectl apply -f mongodb-service.yaml
