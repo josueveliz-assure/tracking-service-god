@@ -79,5 +79,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Eslint
+      - name: Test
         run: npm test
