@@ -16,6 +16,6 @@ router.put('/:id', validateTraineeData, addTraineesModuleController);
 router.put('/:moduleId/trainees/:traineeId/grades', setGradeToTraineeController);
 router.put('/:moduleId/trainees/:traineeId/feedbacks', validateFeedbackData, addFeedbackToTraineeController);
 
-router.get('/', getAllModulesController);
+// router.get('/', getAllModulesController);
 
 export default router;
