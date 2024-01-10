@@ -32,3 +32,7 @@ export const setGradeToTraineeRepository = async (moduleId: string, traineeId: s
   trainee!.grade = grade;
   return module?.save();
 };
+
+export const getAllModulesRepository = async (): Promise<Module[]> => {
+  return ModuleModel.find();
+};

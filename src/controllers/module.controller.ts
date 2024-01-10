@@ -5,7 +5,8 @@ import {
   addTraineesModuleRepository,
   addFeedbackToTraineeRepository,
   findModuleByIdRepository,
-  setGradeToTraineeRepository
+  setGradeToTraineeRepository,
+  getAllModulesRepository,
 } from '../repositories/module.repository';
 import { Module } from '../types/types';
 import { simpleErrorHandler } from '../handlers/error.handler';
@@ -60,6 +61,17 @@ export const setGradeToTraineeController = async (req: Request, res: Response) =
     const moduleUpdated = await setGradeToTraineeRepository(moduleId, traineeId, body.grade);
 
     return res.status(201).json(moduleUpdated);
+  } catch (error) {
+    const errorResponse = simpleErrorHandler(error);
+    res.status(errorResponse.statusCode).json(errorResponse.json);
+  }
+};
+
+export const getAllModulesController = async (req: Request, res: Response) => {
+  try {
+    const modules = await getAllModulesRepository();
+
+    return res.status(200).json(modules);
   } catch (error) {
     const errorResponse = simpleErrorHandler(error);
     res.status(errorResponse.statusCode).json(errorResponse.json);
