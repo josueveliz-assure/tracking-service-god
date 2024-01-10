@@ -42,7 +42,6 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/tracking-service:latest .
-        working-directory: dockerfile
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/tracking-service:latest
