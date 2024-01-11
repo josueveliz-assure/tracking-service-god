@@ -4,7 +4,7 @@ import {
   createModuleController,
   addFeedbackToTraineeController,
   setGradeToTraineeController,
-  getAllModulesController,
+  // getAllModulesController,
 } from '../controllers/module.controller';
 import { validateFeedbackData, validateModuleData, validateTraineeData } from '../middlewares/validateData';
 
